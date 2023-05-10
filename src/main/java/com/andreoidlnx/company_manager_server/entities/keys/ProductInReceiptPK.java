@@ -1,6 +1,7 @@
-package com.andreoidlnx.company_manager_server.entities;
+package com.andreoidlnx.company_manager_server.entities.keys;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,17 +14,19 @@ import lombok.ToString;
 @Embeddable
 public class ProductInReceiptPK {
 
-    @Column(name = "receipt_id", nullable = false)
+    @NotNull
+    @Column(name = "receipt_id")
     private int receiptId;
 
-    @Column(name = "product_id", nullable = false)
+    @NotNull
+    @Column(name = "product_id")
     private int productId;
 
-    @Column(name = "product_year", nullable = false)
+    @NotNull
+    @Column(name = "product_year")
     private int productYear;
 
-    public ProductInReceiptPK() {
-    }
+    public ProductInReceiptPK() {}
 
     public ProductInReceiptPK(int receiptId, int productId, int productYear) {
         this.receiptId = receiptId;

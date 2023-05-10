@@ -1,21 +1,26 @@
-package com.andreoidlnx.company_manager_server.entities;
+package com.andreoidlnx.company_manager_server.entities.keys;
 
 import java.util.Date;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @Embeddable
 public class WorkingDayPK {
 
-    @Column(name = "id_user", nullable = false)
+    @NotNull
+    @Column(name = "id_user")
     private int idUser;
 
-    @Column(name = "work_date", nullable = false)
+    @NotNull
+    @Column(name = "work_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date workDate;
 

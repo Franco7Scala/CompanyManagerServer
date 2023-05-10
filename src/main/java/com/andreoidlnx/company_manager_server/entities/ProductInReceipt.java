@@ -1,5 +1,6 @@
 package com.andreoidlnx.company_manager_server.entities;
 
+import com.andreoidlnx.company_manager_server.entities.keys.ProductInReceiptPK;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,10 +44,6 @@ public class ProductInReceipt {
 
     public ProductInReceipt(int receiptId, int productId, int productYear) {
         this.productInReceiptPK = new ProductInReceiptPK(receiptId, productId, productYear);
-    }
-
-    public ProductInReceiptPK getProductInReceiptPK() {
-        return productInReceiptPK;
     }
     
 }

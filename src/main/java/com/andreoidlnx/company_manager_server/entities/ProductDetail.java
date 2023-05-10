@@ -2,7 +2,7 @@ package com.andreoidlnx.company_manager_server.entities;
 
 import java.util.LinkedList;
 import java.util.List;
-
+import com.andreoidlnx.company_manager_server.entities.keys.ProductDetailPK;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -65,8 +65,4 @@ public class ProductDetail {
         productStateList = new LinkedList<>();
     }
 
-    public ProductDetailPK getProductDetailPK() {
-        return productDetailPK;
-    }
-    
 }

@@ -2,6 +2,9 @@ package com.andreoidlnx.company_manager_server.entities;
 
 import java.util.List;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,7 +37,10 @@ public class State {
     private Boolean favourite = false;
 
     @Id
-    @Column(name = "name", nullable = false, length = 30)
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 30)
+    @Column(name = "name")
     private String name;
 
     public State() {}

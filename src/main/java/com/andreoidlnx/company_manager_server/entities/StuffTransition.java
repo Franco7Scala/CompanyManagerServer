@@ -3,6 +3,8 @@ package com.andreoidlnx.company_manager_server.entities;
 import java.util.Date;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,10 +27,12 @@ public class StuffTransition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @NotNull
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "type", length = 20)
+    @Size(max = 20)
+    @Column(name = "type")
     private String type;
 
     @JoinColumn(name = "id_stuff", referencedColumnName = "id")

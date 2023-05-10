@@ -2,7 +2,10 @@ package com.andreoidlnx.company_manager_server.entities;
 
 import java.util.Date;
 
+import com.andreoidlnx.company_manager_server.entities.keys.WorkingDayPK;
+
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +33,8 @@ public class WorkingDay {
     @Temporal(TemporalType.TIMESTAMP)
     private Date outTime;
 
-    @Column(name = "description", length = 30)
+    @Size(max = 30)
+    @Column(name = "description")
     private String description;
 
     @JoinColumn(name = "id_user", referencedColumnName = "id", insertable = false, updatable = false)

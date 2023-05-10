@@ -1,23 +1,29 @@
-package com.andreoidlnx.company_manager_server.entities;
+package com.andreoidlnx.company_manager_server.entities.keys;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 @Embeddable
 public class ProductInTransitionPK {
 
-    @Column(name = "id_product", nullable = false)
+    @NotNull
+    @Column(name = "id_product")
     private int idProduct;
 
-    @Column(name = "year_product", nullable = false)
+    @NotNull
+    @Column(name = "year_product")
     private int yearProduct;
 
-    @Column(name = "id_transition", nullable = false)
+    @NotNull
+    @Column(name = "id_transition")
     private int idTransition;
 
     public ProductInTransitionPK() {}

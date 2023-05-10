@@ -3,6 +3,8 @@ package com.andreoidlnx.company_manager_server.entities;
 import java.util.List;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,22 +20,28 @@ public class Product {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @NotNull
+    @Column(name = "id")
     private int id;
 
-    @Column(name = "code", length = 20)
+    @Size(max = 20)
+    @Column(name = "code")
     private String code;
 
-    @Column(name = "name", length = 100)
+    @Size(max = 100)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "bar_code_single", length = 100)
+    @Size(max = 100)
+    @Column(name = "bar_code_single")
     private String barCodeSingle;
 
-    @Column(name = "bar_code_package", length = 100)
+    @Size(max = 100)
+    @Column(name = "bar_code_package")
     private String barCodePackage;
 
-    @Column(name = "description", length = 130)
+    @Size(max = 130)
+    @Column(name = "description")
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "product")

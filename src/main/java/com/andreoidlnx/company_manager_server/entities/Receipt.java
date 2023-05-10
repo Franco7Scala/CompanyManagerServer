@@ -3,6 +3,8 @@ package com.andreoidlnx.company_manager_server.entities;
 import java.util.Date;
 import java.util.List;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,13 +33,15 @@ public class Receipt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @NotNull
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "cash_register_number")
     private Integer cashRegisterNumber;
 
-    @Column(name = "cash_register_fresher", length = 50)
+    @Size(max = 50)
+    @Column(name = "cash_register_fresher")
     private String cashRegisterFresher;
 
     @Column(name = "receipt_date")
@@ -47,7 +51,8 @@ public class Receipt {
     @Column(name = "daily_number")
     private Integer dailyNumber;
     
-    @Column(name = "terms_of_payment", length = 50)
+    @Size(max = 50)
+    @Column(name = "terms_of_payment")
     private String termsOfPayment;
     
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "receipt")
@@ -57,10 +62,6 @@ public class Receipt {
 
     public Receipt(Integer id) {
         this.id = id;
-    }
-
-    public Integer getId() {
-        return id;
     }
     
 }

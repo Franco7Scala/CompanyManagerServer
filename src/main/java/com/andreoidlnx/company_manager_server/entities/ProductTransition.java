@@ -2,6 +2,8 @@ package com.andreoidlnx.company_manager_server.entities;
 
 import java.util.Date;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,14 +19,17 @@ public class ProductTransition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @NotNull
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "transition_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date transitionDate;
 
-    @Column(name = "description", nullable = false, length = 300)
+    @NotNull
+    @Size(min = 1, max = 300)
+    @Column(name = "description")
     private String description;
 
     @Column(name = "quantity")
@@ -61,8 +66,7 @@ public class ProductTransition {
     @Transient
     private int newQuantitySingle = 0;
 
-    public ProductTransition() {
-    }
+    public ProductTransition() {}
 
     public ProductTransition(Integer id) {
         this.id = id;

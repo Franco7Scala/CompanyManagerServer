@@ -7,12 +7,6 @@ import com.andreoidlnx.company_manager_server.entities.Capability;
 
 public interface CapabilityRepository extends JpaRepository<Capability, String> {
 
-    //void create(Capability capability);
-
-    //void edit(Capability capability);
-
-    //void remove(Capability capability);
-
     Optional<Capability> findById(String id);
 
     List<Capability> findAll();
@@ -21,7 +15,7 @@ public interface CapabilityRepository extends JpaRepository<Capability, String> 
 
     List<Capability> findByValue(String value);
 
-    //List<Capability> findByCapabilityBetween(int[] range);
+    List<Capability> findByCapabilityBetween(int[] range);
 
     long count();
     

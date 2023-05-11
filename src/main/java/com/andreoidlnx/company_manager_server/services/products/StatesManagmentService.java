@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.andreoidlnx.company_manager_server.entities.ProductDetail;
 import com.andreoidlnx.company_manager_server.entities.ProductState;
 import com.andreoidlnx.company_manager_server.entities.State;
@@ -13,7 +12,7 @@ import com.andreoidlnx.company_manager_server.repositories.ProductStateRepositor
 import com.andreoidlnx.company_manager_server.repositories.StateRepository;
 
 @Service
-public class StatesManagment {
+public class StatesManagmentService {
 
     @Autowired
     private StateRepository stateRepository;
@@ -24,17 +23,17 @@ public class StatesManagment {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addState(State state) {
-        if (stateRepository.find(state.getName()) != null) {
+        if (stateRepository.findById(state.getName()) != null) { //
             state.setVisible(true);
-            stateRepository.edit(state);
+            stateRepository.save(state); //
         } 
         else {
-            stateRepository.create(state);
+            stateRepository.save(state); //
         }
         for (ProductDetail currentProductDetail : productDetailRepository.findAll()) {
-            if (productStateRepository.findBy(currentProductDetail.getProductDetailPK().getIdProduct(), currentProductDetail.getProductDetailPK().getYear(), state.getName()) == null) {
-                productStateRepository.create(new ProductState(currentProductDetail.getProductDetailPK().getIdProduct(), currentProductDetail.getProductDetailPK().getYear(), state.getName(), 0));
+            if (productStateRepository.findByProductIdAndYearAndState(currentProductDetail.getProductDetailPK().getIdProduct(), currentProductDetail.getProductDetailPK().getYear(), state.getName()) == null) { //
+                productStateRepository.save(new ProductState(currentProductDetail.getProductDetailPK().getIdProduct(), currentProductDetail.getProductDetailPK().getYear(), state.getName(), 0)); //
             }
         }
-    
+    }
 }

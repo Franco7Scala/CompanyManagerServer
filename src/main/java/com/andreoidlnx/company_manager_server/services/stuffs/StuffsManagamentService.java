@@ -13,6 +13,7 @@ import com.andreoidlnx.company_manager_server.entities.StuffTransition;
 import com.andreoidlnx.company_manager_server.entities.User;
 import com.andreoidlnx.company_manager_server.repositories.StuffRepository;
 import com.andreoidlnx.company_manager_server.repositories.StuffTransitionRepository;
+import com.andreoidlnx.company_manager_server.services.supports.Constants;
 import com.andreoidlnx.company_manager_server.services.supports.exceptions.ExistStuffNameException;
 
 @Service
@@ -36,7 +37,7 @@ public class StuffsManagamentService {
                     stuff.setBarCodePackage(null);
                 }
                 stuff.setId(verificationStuff.getId());
-                stuffRepository.edit(stuff);
+                stuffRepository.save(stuff); //
             }
             else {
                 throw new ExistStuffNameException();
@@ -50,7 +51,7 @@ public class StuffsManagamentService {
                 stuff.setBarCodePackage(null);
             }
             stuff.setVisible(true);
-            stuffRepository.create(stuff);
+            stuffRepository.save(stuff); //
         }
         StuffTransition transition = new StuffTransition();
         transition.setIdStuff(stuff);
@@ -58,12 +59,12 @@ public class StuffsManagamentService {
         transition.setQuantity(stuff.getQuantity());
         transition.setTransitionDate(new Date());
         transition.setType(Constants.TYPE_LOAD);
-        stuffTransitionRepository.create(transition);
+        stuffTransitionRepository.save(transition); //
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Stuff> getAllStuffs() {
-        return stuffRepository.findAllVisible();
+        return stuffRepository.findByVisibleTrue(); //
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -90,7 +91,7 @@ public class StuffsManagamentService {
         if ( stuff.getBarCodePackage() != null && stuff.getBarCodePackage().equals("") ) {
             stuff.setBarCodePackage(null);
         }
-        stuffRepository.edit(stuff);
+        stuffRepository.save(stuff); //
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -101,7 +102,7 @@ public class StuffsManagamentService {
         if ( stuff.getBarCodePackage() != null && stuff.getBarCodePackage().equals("") ) {
             stuff.setBarCodePackage(null);
         }
-        stuffRepository.edit(stuff);
+        stuffRepository.save(stuff); //
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -113,8 +114,8 @@ public class StuffsManagamentService {
     public void addStuffTransition(StuffTransition transition) {
         Stuff stuff = transition.getIdStuff();
         stuff.setQuantity(stuff.getQuantity() + transition.getQuantity());
-        stuffRepository.edit(stuff);
-        stuffTransitionRepository.create(transition);
+        stuffRepository.save(stuff); //
+        stuffTransitionRepository.save(transition); //
     }
     
 }

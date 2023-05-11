@@ -1,6 +1,6 @@
 package com.andreoidlnx.company_manager_server.services.supports;
 
-public interface Costants {
+public interface Constants {
 
     public static final String USER_CONFIRMED = "USER_CONFIRMED";
 

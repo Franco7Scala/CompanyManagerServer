@@ -10,14 +10,6 @@ import com.andreoidlnx.company_manager_server.entities.Receipt;
 
 public interface ReceiptRepository extends JpaRepository<Receipt, Integer>{
 
-    //void create(Receipt receipt);
-
-    //void edit(Receipt receipt);
-
-    //void remove(Receipt receipt);
-
-    //Receipt find(Object id);
-
     @Query("SELECT MAX(r.dailyNumber) FROM Receipt r WHERE r.receiptDate >= :startTime AND r.receiptDate < :endTime")
     Integer findMaxTodayId(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
     
@@ -38,10 +30,11 @@ public interface ReceiptRepository extends JpaRepository<Receipt, Integer>{
 
     List<Receipt> findAll();
 
-    //List<Receipt> findByReceiptBetween(int[] range);
+    List<Receipt> findByReceiptBetween(int[] range);
 
     long count();
 
-    //int getLatestTodayNumber(Date date);
+    @Query("SELECT r.receipt_date FROM Receipt r WHERE r.receipt_date = :date")
+    int getLatestTodayNumber(@Param("date") Date date);
     
 }

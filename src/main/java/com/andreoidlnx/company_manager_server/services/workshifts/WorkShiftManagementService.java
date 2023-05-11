@@ -3,37 +3,35 @@ package com.andreoidlnx.company_manager_server.services.workshifts;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.andreoidlnx.company_manager_server.entities.User;
 import com.andreoidlnx.company_manager_server.entities.WorkingDay;
 import com.andreoidlnx.company_manager_server.repositories.WorkingDayRepository;
 
 @Service
-public class WorkShiftsManagmentService {
+public class WorkShiftManagementService {
 
     @Autowired
     private WorkingDayRepository wrkingDayRepository;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addWorkingDay(WorkingDay day) throws Exception {
-        if ( wrkingDayRepository.find(day.getWorkingDayPK()) == null ) {
-            wrkingDayRepository.create(day);
+        if ( wrkingDayRepository.findById(day.getWorkingDayPK()) == null ) { //
+            wrkingDayRepository.save(day); //
         }
         else {
             day.setVisible(true);
-            wrkingDayRepository.edit(day);
+            wrkingDayRepository.save(day); //
         }
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void removeWorkingDay(WorkingDay day) {
         day.setVisible(false);
-        wrkingDayRepository.edit(day);
+        wrkingDayRepository.save(day); //
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

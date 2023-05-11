@@ -1,6 +1,7 @@
 package com.andreoidlnx.company_manager_server.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,13 +10,7 @@ import com.andreoidlnx.company_manager_server.entities.keys.ProductDetailPK;
 
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, ProductDetailPK> {
 
-    //void create(ProductDetail productDetail);
-
-    //void edit(ProductDetail productDetail);
-
-    //void remove(ProductDetail productDetail);
-
-    //List<ProductDetail> findByProductDetailPK(ProductDetailPK productDetailPK);
+    Optional<ProductDetail> findById(ProductDetailPK id);
 
     List<ProductDetail> findAll();
     
@@ -27,7 +22,7 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, Pr
 
     List<ProductDetail> findByQuantity(Integer quantity);
 
-    //List<ProductDetail> findByProductDetailBetween(int[] range);
+    List<ProductDetail> findByProductDetailBetween(int[] range);
 
     long count();
 

@@ -10,14 +10,6 @@ import java.util.Date;
 
 public interface ProductTransitionRepository extends JpaRepository<ProductTransition, Integer> {
 
-    //void create(ProductTransition productTransition);
-
-    //void edit(ProductTransition productTransition);
-
-    //void remove(ProductTransition productTransition);
-
-    //ProductTransition find(Object id);
-
     List<ProductTransition> findAll();
 
     @Query("SELECT p FROM ProductTransition p ORDER BY p.transitionDate DESC")
@@ -31,7 +23,7 @@ public interface ProductTransitionRepository extends JpaRepository<ProductTransi
 
     List<ProductTransition> findByQuantity(Integer quantity);
 
-    //List<ProductTransition> findByProductTransitionBetween(int[] range);
+    List<ProductTransition> findByProductTransitionBetween(int[] range);
 
     long count();
     

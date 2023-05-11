@@ -7,12 +7,6 @@ import com.andreoidlnx.company_manager_server.entities.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    //void create(Product product);
-
-    //void edit(Product product);
-
-    //void remove(Product product);
-
     Optional<Product> findById(Integer id);
 
     List<Product> findAll();
@@ -27,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByDescription(String description);
 
-    //List<Product> findByProductBetween(int[] range);
+    List<Product> findByProductBetween(int[] range);
 
     long count();
     

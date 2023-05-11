@@ -2,26 +2,16 @@ package com.andreoidlnx.company_manager_server.repositories;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
 import com.andreoidlnx.company_manager_server.entities.Stuff;
 
 public interface StuffRepository extends JpaRepository<Stuff, Integer>{
 
-    //void create(Stuff stuff);
-
-    //void edit(Stuff stuff);
-
-    //void remove(Stuff stuff);
-
-    //Stuff find(Object id);
-
     List<Stuff> findAll();
 
-    //List<Stuff> findByStuffBetween(int[] range);
+    List<Stuff> findByStuffBetween(int[] range);
 
     long count();
 
@@ -48,6 +38,7 @@ public interface StuffRepository extends JpaRepository<Stuff, Integer>{
 
     //boolean existName(String name);
 
-    //Stuff findSingleByName(String name);
+    @Query("SELECT s FROM Stuff s WHERE s.name = :name")
+    Stuff findSingleByName(@Param("name") String name);
     
 }

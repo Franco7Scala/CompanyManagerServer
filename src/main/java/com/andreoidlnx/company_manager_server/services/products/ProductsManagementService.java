@@ -1,13 +1,12 @@
 package com.andreoidlnx.company_manager_server.services.products;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.andreoidlnx.company_manager_server.entities.Product;
 import com.andreoidlnx.company_manager_server.entities.ProductDetail;
 import com.andreoidlnx.company_manager_server.entities.ProductState;
@@ -19,8 +18,7 @@ import com.andreoidlnx.company_manager_server.repositories.ProductRepository;
 import com.andreoidlnx.company_manager_server.repositories.ProductStateRepository;
 import com.andreoidlnx.company_manager_server.repositories.ProductTransitionRepository;
 import com.andreoidlnx.company_manager_server.repositories.StateRepository;
-
-
+import com.andreoidlnx.company_manager_server.services.supports.Constants;
 
 @Service
 public class ProductsManagementService {
@@ -53,7 +51,7 @@ public class ProductsManagementService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addProductDetail(ProductDetail productDetail, State state, User user) {
-        if ( productDetailRepository.find(productDetail.getProductDetailPK()) == null ) {
+        if ( productDetailRepository.findById(productDetail.getProductDetailPK()) == null ) { //
             for ( State currentState : stateRepository.findAll() ) {
                 if ( currentState.getName().equals(state.getName()) ) {
                     productDetail.getProductStateList().add(new ProductState(productDetail.getProduct().getId(), productDetail.getProductDetailPK().getYear(), currentState.getName(), productDetail.getQuantity()));
@@ -65,16 +63,16 @@ public class ProductsManagementService {
             productDetailRepository.save(productDetail);
         }
         else {
-            ProductDetail productDetailEdited = productDetailRepository.find(productDetail.getProductDetailPK());
+            ProductDetail productDetailEdited = productDetailRepository.findById(productDetail.getProductDetailPK()).orElseThrow(null); //
             productDetailEdited.setQuantity(productDetailEdited.getQuantity() + productDetail.getQuantity());
-            productDetailRepository.edit(productDetailEdited);
-            ProductState productState = productStateRepository.findBy(productDetail.getProductDetailPK().getIdProduct(), productDetail.getProductDetailPK().getYear(), state.getName());
+            productDetailRepository.save(productDetailEdited); //edit
+            ProductState productState = productStateRepository.findByProductIdAndYearAndState(productDetail.getProductDetailPK().getIdProduct(), productDetail.getProductDetailPK().getYear(), state.getName()); //
             if ( productState != null ) {
                 productState.setQuantity(productState.getQuantity() + productDetail.getQuantity());
-                productStateRepository.edit(productState);
+                productStateRepository.save(productState); //edit
             }
             else {
-                productStateRepository.create(new ProductState(productDetail.getProductDetailPK().getIdProduct(), productDetail.getProductDetailPK().getYear(), state.getName(), productDetail.getQuantity()));
+                productStateRepository.save(new ProductState(productDetail.getProductDetailPK().getIdProduct(), productDetail.getProductDetailPK().getYear(), state.getName(), productDetail.getQuantity()));
             }
         }
         ProductTransition transition = new ProductTransition();
@@ -85,7 +83,7 @@ public class ProductsManagementService {
         transition.setTransitionDate(new Date());
         transition.setDescription(Constants.DEFAULT_STATE);
         transition.setIdUser(user);
-        productsTransitionRepository.create(transition);
+        productsTransitionRepository.save(transition);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
@@ -96,26 +94,26 @@ public class ProductsManagementService {
         if ( productDetail.getProduct().getBarCodePackage().equals("") ) {
             productDetail.getProduct().setBarCodePackage(null);
         }
-        productRepository.edit(productDetail.getProduct());
-        productDetailRepository.edit(productDetail);
+        productRepository.save(productDetail.getProduct()); //edit
+        productDetailRepository.save(productDetail); //edit
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addProductState(ProductState state) {
-        productStateRepository.create(state);
+        productStateRepository.save(state);
     }
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addTransition(ProductTransition transition) {
-        productsTransitionRepository.create(transition);
+        productsTransitionRepository.save(transition);
         for ( ProductState productState : transition.getProductDetail().getProductStateList() ) {
             if ( productState.getState().equals(transition.getFromState()) ) {
                 productState.setQuantity(productState.getQuantity() - transition.getQuantity());
-                productStateRepository.edit(productState);
+                productStateRepository.save(productState); //edit
             }
             else if ( productState.getState().equals(transition.getToState()) ) {
                 productState.setQuantity(productState.getQuantity() + transition.getQuantity());
-                productStateRepository.edit(productState);
+                productStateRepository.save(productState); //edit
             }
         }
     }
@@ -169,12 +167,12 @@ public class ProductsManagementService {
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<ProductTransition> getProductTransitions() {
-        return productsTransitionRepository.findAddOrdered();
+        return productsTransitionRepository.findAllOrdered(); //
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<ProductDetail> getAllProductsDetail() {
-        return productDetailRepository.findAllOrdered();
+        return productDetailRepository.findAllOrdered(); //
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

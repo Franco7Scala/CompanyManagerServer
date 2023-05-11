@@ -2,12 +2,10 @@ package com.andreoidlnx.company_manager_server.services.products;
 
 import java.util.Date;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.andreoidlnx.company_manager_server.entities.ProductInReceipt;
 import com.andreoidlnx.company_manager_server.entities.Receipt;
 import com.andreoidlnx.company_manager_server.entities.keys.ProductInReceiptPK;
@@ -28,17 +26,17 @@ public class ReceiptManagmentService {
         receipt.setProductInReceiptList(null);
         receipt.setReceiptDate(new Date());
         receipt.setDailyNumber((receiptRepository.getLatestTodayNumber(receipt.getReceiptDate()) + 1));
-        receiptRepository.create(receipt);
+        receiptRepository.save(receipt); //
         for ( ProductInReceipt current : content ) {
             current.setProductInReceiptPK(new ProductInReceiptPK(receipt.getId(), current.getProductDetail().getProduct().getId(), current.getProductDetail().getProductDetailPK().getYear()));
-            productInReceiptRepository.create(current);
+            productInReceiptRepository.save(current); //
         }
         receipt.setProductInReceiptList(content);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Receipt> getAllReceipts() {
-        return receiptRepository.findOrderedByDate();
+        return receiptRepository.findAllOrderedByDate(); //
     }
     
 }

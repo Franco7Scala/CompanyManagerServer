@@ -1,6 +1,7 @@
 package com.andreoidlnx.company_manager_server.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,14 +9,8 @@ import com.andreoidlnx.company_manager_server.entities.ProductInReceipt;
 import com.andreoidlnx.company_manager_server.entities.keys.ProductInReceiptPK;
 
 public interface ProductInReceiptRepository extends JpaRepository<ProductInReceipt, ProductInReceiptPK> {
-
-    //void create(ProductInReceipt productInReceipt);
-
-    //void edit(ProductInReceipt productInReceipt);
-
-    //void remove(ProductInReceipt productInReceipt);
     
-    //List<ProductInReceipt> findByProductInReceiptPK(ProductInReceiptPK productInReceiptPK);
+    Optional<ProductInReceipt> findById(ProductInReceiptPK id);
 
     @Query("SELECT p FROM ProductInReceipt p WHERE p.productInReceiptPK.receiptId = :receiptId")
     ProductInReceipt findByReceiptId(@Param("receiptId") Integer receiptId);
@@ -32,7 +27,7 @@ public interface ProductInReceiptRepository extends JpaRepository<ProductInRecei
 
     List<ProductInReceipt> findAll();
 
-    //List<ProductInReceipt> findByProductInReceiptBetween(int[] range);
+    List<ProductInReceipt> findByProductInReceiptBetween(int[] range);
 
     long count();
     

@@ -1,19 +1,14 @@
 package com.andreoidlnx.company_manager_server.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import com.andreoidlnx.company_manager_server.entities.State;
 
 public interface StateRepository extends JpaRepository<State, String>{
-
-    //void create(State state);
-
-    //void edit(State state);
-
-    //void remove(State state);
-
-    //State find(Object id);
+    
+    Optional<State> findById(String id);
 
     List<State> findByName(String name);
 
@@ -31,10 +26,8 @@ public interface StateRepository extends JpaRepository<State, String>{
 
     List<State> findAll();
 
-    //List<State> findByStateBetween(int[] range);
+    List<State> findByStateBetween(int[] range);
 
     long count();
-    
-    //State getPreferredState();
     
 }

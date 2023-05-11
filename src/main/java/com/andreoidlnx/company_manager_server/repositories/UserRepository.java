@@ -6,21 +6,15 @@ import com.andreoidlnx.company_manager_server.entities.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 
-    //void create(User user);
-
-    //void edit(User user);
-
-    //void remove(User user);
-
     User findById(int id);
 
     List<User> findAll();
 
-    //List<User> findByUserBetween(int[] range);
+    List<User> findByUserBetween(int[] range);
 
     long count();
 
-    //boolean existsByUsername(String username);
+    boolean existsByUsername(String username);
 
     User findByUsername( String username);
 

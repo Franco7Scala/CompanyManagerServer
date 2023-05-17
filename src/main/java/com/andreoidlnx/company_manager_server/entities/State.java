@@ -19,7 +19,7 @@ import lombok.ToString;
 public class State {
 
     @Column(name = "downloadable")
-    private Boolean downloadable = true;
+    private boolean downloadable = true;
 
     @OneToMany(mappedBy = "fromState")
     private List<ProductTransition> productTransitionList;
@@ -31,10 +31,10 @@ public class State {
     private List<ProductState> productStateList;
 
     @Column(name = "visible")
-    private Boolean visible = true;
+    private boolean visible = true;
 
     @Column(name = "favourite")
-    private Boolean favourite = false;
+    private boolean favourite = false;
 
     @Id
     @NotNull

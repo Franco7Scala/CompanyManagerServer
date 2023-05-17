@@ -22,11 +22,9 @@ public interface StateRepository extends JpaRepository<State, String>{
     List<State> findAllDownloadable();
 
     @Query("SELECT s FROM State s WHERE s.visible = 1 AND s.downloadable = 0")
-    List<State> findAllUnownloadadble();
+    List<State> findAllUnownloadable();
 
     List<State> findAll();
-
-    List<State> findByStateBetween(int[] range);
 
     long count();
     

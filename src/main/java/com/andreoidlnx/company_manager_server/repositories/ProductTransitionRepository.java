@@ -15,15 +15,13 @@ public interface ProductTransitionRepository extends JpaRepository<ProductTransi
     @Query("SELECT p FROM ProductTransition p ORDER BY p.transitionDate DESC")
     List<ProductTransition> findAllOrdered();
 
-    Optional<ProductTransition> findById(Integer id);
+    Optional<ProductTransition> findById(int id);
 
     List<ProductTransition> findByTransitionDate(Date transitionDate);
 
     List<ProductTransition> findByDescription(String description);
 
-    List<ProductTransition> findByQuantity(Integer quantity);
-
-    List<ProductTransition> findByProductTransitionBetween(int[] range);
+    List<ProductTransition> findByQuantity(int quantity);
 
     long count();
     

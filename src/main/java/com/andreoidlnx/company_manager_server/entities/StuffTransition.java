@@ -1,7 +1,6 @@
 package com.andreoidlnx.company_manager_server.entities;
 
 import java.util.Date;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -19,7 +18,7 @@ import lombok.ToString;
 public class StuffTransition {
 
     @Column(name = "quantity")
-    private Float quantity;
+    private float quantity;
     
     @Column(name = "transition_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,7 +28,7 @@ public class StuffTransition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Size(max = 20)
     @Column(name = "type")

@@ -10,8 +10,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     List<User> findAll();
 
-    List<User> findByUserBetween(int[] range);
-
     long count();
 
     boolean existsByUsername(String username);

@@ -19,10 +19,10 @@ public class ProductInReceipt {
     protected ProductInReceiptPK productInReceiptPK;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @Column(name = "price")
-    private Float price;
+    private float price;
 
     @JoinColumn(name = "receipt_id", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

@@ -7,7 +7,7 @@ import com.andreoidlnx.company_manager_server.entities.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    Optional<Product> findById(Integer id);
+    Optional<Product> findById(int id);
 
     List<Product> findAll();
  
@@ -20,8 +20,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product findByBarCodePackage(String barCodePackage);
 
     List<Product> findByDescription(String description);
-
-    List<Product> findByProductBetween(int[] range);
 
     long count();
     

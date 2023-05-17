@@ -20,9 +20,7 @@ public interface ProductDetailRepository extends JpaRepository<ProductDetail, Pr
     @Query("SELECT p FROM ProductDetail p WHERE p.productDetailPK.year = :year")
     List<ProductDetail> findByYear(@Param("year") int year);
 
-    List<ProductDetail> findByQuantity(Integer quantity);
-
-    List<ProductDetail> findByProductDetailBetween(int[] range);
+    List<ProductDetail> findByQuantity(int quantity);
 
     long count();
 

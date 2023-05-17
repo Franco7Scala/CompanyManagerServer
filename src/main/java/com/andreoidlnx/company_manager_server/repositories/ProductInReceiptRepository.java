@@ -13,21 +13,19 @@ public interface ProductInReceiptRepository extends JpaRepository<ProductInRecei
     Optional<ProductInReceipt> findById(ProductInReceiptPK id);
 
     @Query("SELECT p FROM ProductInReceipt p WHERE p.productInReceiptPK.receiptId = :receiptId")
-    ProductInReceipt findByReceiptId(@Param("receiptId") Integer receiptId);
+    ProductInReceipt findByReceiptId(@Param("receiptId") int receiptId);
 
     @Query("SELECT p FROM ProductInReceipt p WHERE p.productInReceiptPK.productId = :productId")
-    ProductInReceipt findByProductId(@Param("productId") Integer productId);
+    ProductInReceipt findByProductId(@Param("productId") int productId);
 
     @Query("SELECT p FROM ProductInReceipt p WHERE p.productInReceiptPK.productYear = :productYear")
     List<ProductInReceipt> findByProductYear(@Param("productYear") int productYear);
 
-    List<ProductInReceipt> findByQuantity(Integer quantity);
+    List<ProductInReceipt> findByQuantity(int quantity);
 
-    List<ProductInReceipt> findByPrice(Float price);
+    List<ProductInReceipt> findByPrice(float price);
 
     List<ProductInReceipt> findAll();
-
-    List<ProductInReceipt> findByProductInReceiptBetween(int[] range);
 
     long count();
     

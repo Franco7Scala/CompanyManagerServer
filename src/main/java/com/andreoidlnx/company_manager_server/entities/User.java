@@ -38,7 +38,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Size(max = 20)
     @Column(name = "username")
@@ -71,7 +71,7 @@ public class User {
     private List<WorkingDay> workingDayList;
 
     @Column(name = "visible")
-    private Boolean visible = true;
+    private boolean visible = true;
 
     public User() {
         capabilityList = new LinkedList<>();

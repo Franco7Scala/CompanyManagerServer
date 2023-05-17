@@ -24,13 +24,13 @@ public class Stuff implements Comparable<Stuff> {
     private float threshold;
 
     @Column(name = "visible")
-    private Boolean visible = true;
+    private boolean visible = true;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Size(max = 100)
     @Column(name = "name")

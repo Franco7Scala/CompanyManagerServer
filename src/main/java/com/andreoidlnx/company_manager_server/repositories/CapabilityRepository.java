@@ -15,8 +15,6 @@ public interface CapabilityRepository extends JpaRepository<Capability, String> 
 
     List<Capability> findByValue(String value);
 
-    List<Capability> findByCapabilityBetween(int[] range);
-
     long count();
     
 }

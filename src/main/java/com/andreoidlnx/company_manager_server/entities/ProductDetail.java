@@ -36,7 +36,7 @@ public class ProductDetail {
     protected ProductDetailPK productDetailPK;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @JoinColumn(name = "id_product", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

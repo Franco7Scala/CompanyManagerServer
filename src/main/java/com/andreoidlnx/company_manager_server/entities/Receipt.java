@@ -29,16 +29,16 @@ public class Receipt {
     private User user;
 
     @Column(name = "discount")
-    private Integer discount = 0;
+    private int discount = 0;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Column(name = "cash_register_number")
-    private Integer cashRegisterNumber;
+    private int cashRegisterNumber;
 
     @Size(max = 50)
     @Column(name = "cash_register_fresher")
@@ -49,7 +49,7 @@ public class Receipt {
     private Date receiptDate;
     
     @Column(name = "daily_number")
-    private Integer dailyNumber;
+    private int dailyNumber;
     
     @Size(max = 50)
     @Column(name = "terms_of_payment")

@@ -11,8 +11,6 @@ public interface StuffRepository extends JpaRepository<Stuff, Integer>{
 
     List<Stuff> findAll();
 
-    List<Stuff> findByStuffBetween(int[] range);
-
     long count();
 
     List<Stuff> findByVisibleTrue(); //findAllVisible

@@ -19,7 +19,7 @@ public class ProductState {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @JoinColumns({
         @JoinColumn(name = "id_product", referencedColumnName = "id_product"), 
@@ -33,7 +33,7 @@ public class ProductState {
     private State state;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @JoinColumn(name = "id_product", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)

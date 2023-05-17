@@ -21,7 +21,7 @@ public class ProductTransition {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Column(name = "id")
-    private Integer id;
+    private int id;
 
     @Column(name = "transition_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,7 +33,7 @@ public class ProductTransition {
     private String description;
 
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 
     @JoinColumn(name = "from_state", referencedColumnName = "name")
     @ManyToOne

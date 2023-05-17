@@ -16,25 +16,23 @@ public interface ReceiptRepository extends JpaRepository<Receipt, Integer>{
     @Query("SELECT r FROM Receipt r ORDER BY r.receiptDate DESC")
     List<Receipt> findAllOrderedByDate();
 
-    Optional<Receipt> findById(Integer id);
+    Optional<Receipt> findById(int id);
 
-    List<Receipt> findByCashRegisterNumber(Integer cashRegisterNumber);
+    List<Receipt> findByCashRegisterNumber(int cashRegisterNumber);
 
     List<Receipt> findByCashRegisterFresher(String cashRegisterFresher);
 
     List<Receipt> findByReceiptDate(Date receiptDate);
 
-    List<Receipt> findByDailyNumber(Integer dailyNumber);
+    List<Receipt> findByDailyNumber(int dailyNumber);
 
     List<Receipt> findByTermsOfPayment(String termsOfPayment);
 
     List<Receipt> findAll();
 
-    List<Receipt> findByReceiptBetween(int[] range);
-
     long count();
 
-    @Query("SELECT r.receipt_date FROM Receipt r WHERE r.receipt_date = :date")
+    @Query(value = "SELECT r.receipt_date FROM Receipt r WHERE r.receipt_date = :date", nativeQuery = true)
     int getLatestTodayNumber(@Param("date") Date date);
     
 }

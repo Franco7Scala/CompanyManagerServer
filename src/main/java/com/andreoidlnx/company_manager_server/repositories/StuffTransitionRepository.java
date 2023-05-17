@@ -9,13 +9,11 @@ public interface StuffTransitionRepository extends JpaRepository<StuffTransition
 
     List<StuffTransition> findAll();
 
-    Optional<StuffTransition> findById(Integer id);
+    Optional<StuffTransition> findById(int id);
 
-    List<StuffTransition> findByQuantity(Float quantity);
+    List<StuffTransition> findByQuantity(float quantity);
 
     List<StuffTransition> findByType(String type);
-
-    List<StuffTransition> findByStuffTransitionBetween(int[] range);
 
     long count();
     

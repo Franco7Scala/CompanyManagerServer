@@ -26,7 +26,7 @@ public class StuffService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addStuff(Stuff stuff, User user) throws ExistStuffNameException {
         Stuff verificationStuff = stuffRepository.findSingleByName(stuff.getName());
-        if (verificationStuff != null) {
+        if(verificationStuff != null) {
             if(!verificationStuff.isVisible()) {
                 if(stuff.getBarCodeSingle() != null && stuff.getBarCodeSingle().equals("") ) {
                     stuff.setBarCodeSingle(null);
@@ -42,10 +42,10 @@ public class StuffService {
             }
         }
         else {
-            if ( stuff.getBarCodeSingle() != null && stuff.getBarCodeSingle().equals("") ) {
+            if(stuff.getBarCodeSingle() != null && stuff.getBarCodeSingle().equals("")) {
                 stuff.setBarCodeSingle(null);
             }
-            if ( stuff.getBarCodePackage() != null && stuff.getBarCodePackage().equals("") ) {
+            if(stuff.getBarCodePackage() != null && stuff.getBarCodePackage().equals("")) {
                 stuff.setBarCodePackage(null);
             }
             stuff.setVisible(true);

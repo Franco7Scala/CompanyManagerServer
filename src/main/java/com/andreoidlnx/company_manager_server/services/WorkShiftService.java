@@ -19,7 +19,7 @@ public class WorkShiftService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addWorkingDay(WorkingDay day) throws Exception {
-        if (workingDayRepository.findById(day.getWorkingDayPK()) == null) {
+        if(workingDayRepository.findById(day.getWorkingDayPK()) == null) {
             workingDayRepository.save(day);
         }
         else {

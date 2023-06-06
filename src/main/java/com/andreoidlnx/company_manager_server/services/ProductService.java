@@ -19,6 +19,7 @@ import com.andreoidlnx.company_manager_server.repositories.ProductStateRepositor
 import com.andreoidlnx.company_manager_server.repositories.ProductTransitionRepository;
 import com.andreoidlnx.company_manager_server.repositories.StateRepository;
 import com.andreoidlnx.company_manager_server.supports.Constants;
+import com.andreoidlnx.company_manager_server.supports.exceptions.ProductNotExistException;
 
 @Service
 public class ProductService {
@@ -40,10 +41,10 @@ public class ProductService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addProduct(Product product) {
-        if ( product.getBarCodeSingle().equals("") ) {
+        if (product.getBarCodeSingle().equals("")) {
             product.setBarCodeSingle(null);
         }
-        if ( product.getBarCodePackage().equals("") ) {
+        if (product.getBarCodePackage().equals("")) {
             product.setBarCodePackage(null);
         }
         productRepository.save(product);
@@ -51,9 +52,9 @@ public class ProductService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addProductDetail(ProductDetail productDetail, State state, User user) {
-        if ( productDetailRepository.findById(productDetail.getProductDetailPK()) == null ) {
-            for ( State currentState : stateRepository.findAll() ) {
-                if ( currentState.getName().equals(state.getName()) ) {
+        if (productDetailRepository.findById(productDetail.getProductDetailPK()) == null) {
+            for (State currentState : stateRepository.findAll()) {
+                if (currentState.getName().equals(state.getName())) {
                     productDetail.getProductStateList().add(new ProductState(productDetail.getProduct().getId(), productDetail.getProductDetailPK().getYear(), currentState.getName(), productDetail.getQuantity()));
                 }
                 else {
@@ -67,7 +68,7 @@ public class ProductService {
             productDetailEdited.setQuantity(productDetailEdited.getQuantity() + productDetail.getQuantity());
             productDetailRepository.save(productDetailEdited);
             ProductState productState = productStateRepository.findByProductIdAndYearAndState(productDetail.getProductDetailPK().getIdProduct(), productDetail.getProductDetailPK().getYear(), state.getName());
-            if ( productState != null ) {
+            if (productState != null) {
                 productState.setQuantity(productState.getQuantity() + productDetail.getQuantity());
                 productStateRepository.save(productState);
             }
@@ -88,10 +89,10 @@ public class ProductService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void editProductDetail(ProductDetail productDetail) {
-        if ( productDetail.getProduct().getBarCodeSingle().equals("") ) {
+        if (productDetail.getProduct().getBarCodeSingle().equals("")) {
             productDetail.getProduct().setBarCodeSingle(null);
         }
-        if ( productDetail.getProduct().getBarCodePackage().equals("") ) {
+        if (productDetail.getProduct().getBarCodePackage().equals("")) {
             productDetail.getProduct().setBarCodePackage(null);
         }
         productRepository.save(productDetail.getProduct());
@@ -106,12 +107,12 @@ public class ProductService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void addTransition(ProductTransition transition) {
         productTransitionRepository.save(transition);
-        for ( ProductState productState : transition.getProductDetail().getProductStateList() ) {
-            if ( productState.getState().equals(transition.getFromState()) ) {
+        for (ProductState productState : transition.getProductDetail().getProductStateList()) {
+            if (productState.getState().equals(transition.getFromState())) {
                 productState.setQuantity(productState.getQuantity() - transition.getQuantity());
                 productStateRepository.save(productState);
             }
-            else if ( productState.getState().equals(transition.getToState()) ) {
+            else if (productState.getState().equals(transition.getToState())) {
                 productState.setQuantity(productState.getQuantity() + transition.getQuantity());
                 productStateRepository.save(productState);
             }
@@ -121,6 +122,14 @@ public class ProductService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public List<Product> getAllProducts() {
         return productRepository.findAll();
+    }
+
+    public Product getProductById(int id) throws ProductNotExistException {
+        return productRepository.findById(id).orElseThrow();
+    }
+
+    public List<Product> getProductByName(String name){
+        return productRepository.findByName(name);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -136,23 +145,23 @@ public class ProductService {
     }
 
     private List<ProductDetail> getProducts(Product product, boolean onlyAvailable) {
-        if ( product == null ) {
+        if (product == null) {
             return null;
         }
         else {
             List<State> downloadableStates = stateRepository.findAllDownloadable();
-            if ( onlyAvailable ) {
+            if (onlyAvailable) {
                 List<ProductDetail> results = productDetailRepository.findByProductNameAvailable(product.getName());
                 List<ProductDetail> toDelete = new LinkedList<>();
-                for ( ProductDetail detail : results ) {
+                for (ProductDetail detail : results) {
                     boolean found = false;
-                    for ( ProductState state : detail.getProductStateList() ) {
-                        if ( downloadableStates.contains(state.getState()) && state.getQuantity() > 0 ) {
+                    for (ProductState state : detail.getProductStateList()) {
+                        if (downloadableStates.contains(state.getState()) && state.getQuantity() > 0) {
                             found = true;
                             break;
                         }
                     }
-                    if ( !found ) {
+                    if (!found) {
                         toDelete.add(detail);
                     }
                 }
@@ -184,12 +193,12 @@ public class ProductService {
     public List<ProductDetail> getProductsDetailByProductName(String name) {
         List<ProductDetail> result = productDetailRepository.findByProductName(name);
         List<ProductDetail> toDelete = new LinkedList<>();
-        for ( int i = 0; i < result.size(); i++ ) {
+        for (int i = 0; i < result.size(); i++) {
             ProductDetail current = result.get(i);
             boolean ok = false;
-            for ( int j = 0; j < current.getProductStateList().size(); j++ ) {
-                if ( current.getProductStateList().get(j).getState().isDownloadable() ) {
-                    if ( current.getProductStateList().get(j).getQuantity() > 0 ) {
+            for (int j = 0; j < current.getProductStateList().size(); j++) {
+                if (current.getProductStateList().get(j).getState().isDownloadable()) {
+                    if (current.getProductStateList().get(j).getQuantity() > 0) {
                         ok = true;
                         break;
                     }
@@ -199,7 +208,7 @@ public class ProductService {
                 toDelete.add(current);
             }
         }
-        for ( ProductDetail current : toDelete ) {
+        for (ProductDetail current : toDelete) {
             result.remove(current);
         }
         return result;

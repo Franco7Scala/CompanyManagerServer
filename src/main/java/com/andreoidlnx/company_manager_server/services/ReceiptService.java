@@ -28,7 +28,7 @@ public class ReceiptService {
         receipt.setReceiptDate(new Date());
         receipt.setDailyNumber((receiptRepository.getLatestTodayNumber(receipt.getReceiptDate()) + 1));
         receiptRepository.save(receipt);
-        for ( ProductInReceipt current : content ) {
+        for (ProductInReceipt current : content) {
             current.setProductInReceiptPK(new ProductInReceiptPK(receipt.getId(), current.getProductDetail().getProduct().getId(), current.getProductDetail().getProductDetailPK().getYear()));
             productInReceiptRepository.save(current);
         }

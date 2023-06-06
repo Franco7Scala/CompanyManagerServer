@@ -25,7 +25,7 @@ public class StateService {
 
     @Transactional(propagation = Propagation.REQUIRED)
     public void addState(State state) {
-        if (stateRepository.findById(state.getName()) != null) {
+        if(stateRepository.findById(state.getName()) != null) {
             state.setVisible(true);
             stateRepository.save(state);
         } 
@@ -42,8 +42,8 @@ public class StateService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void setPreferredState(State state) {
         List<State> allStates = stateRepository.findAll();
-        for (State currentState : allStates) {
-            if (currentState.isFavourite()) {
+        for(State currentState : allStates) {
+            if(currentState.isFavourite()) {
                 currentState.setFavourite(false);
                 stateRepository.save(currentState);
             }
